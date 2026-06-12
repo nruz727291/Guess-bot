@@ -145,7 +145,7 @@ def register(app: Client):
         
         await _show_room_lobby(client, cb.message, room, user.id)
 
-    @app.on_message(filters.private & filters.text & ~filters.command(["start"]))
+    @app.on_message(filters.text & ~filters.command(["start"]))
     async def handle_room_code_input(client: Client, message: Message):
         """Handle manual room code input."""
         user = message.from_user
