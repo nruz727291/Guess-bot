@@ -1,0 +1,30 @@
+# Environment variables (NEVER upload these!)
+.env
+*.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Logs
+logs/*.log
+
+# Pyrogram session files (IMPORTANT: never share these)
+*.session
+*.session-journal
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
