@@ -18,13 +18,22 @@ def register(app: Client):
     async def start_cmd(client: Client, message: Message):
         """Handle /start command."""
         user = message.from_user
-        
+
+        # Group mein sirf DM ka message bhejo
+        if message.chat.type in ["group", "supergroup"]:
+            await message.reply_text(
+                "👋 **Guess The Number Bot!**\n\n"
+                "🎮 Game khelne ke liye mujhe **DM karo**!\n"
+                "👉 @Guessthenumrber_bot"
+            )
+            return
+
         if is_flooding(user.id):
             return
-        
+
         # Register or update user
         await get_or_register(user.id, user.username or "", user.first_name or "")
-        
+
         await message.reply_text(
             MSG_WELCOME,
             reply_markup=main_menu_keyboard()
@@ -35,35 +44,35 @@ def register(app: Client):
     async def refresh_menu(client: Client, cb: CallbackQuery):
         """Refresh the main menu."""
         user = cb.from_user
-        
+
         if is_flooding(user.id):
             await cb.answer("Slow down! ⏳", show_alert=False)
             return
-        
+
         await get_or_register(user.id, user.username or "", user.first_name or "")
-        
+
         try:
             await cb.message.edit_text(
                 MSG_WELCOME,
                 reply_markup=main_menu_keyboard()
             )
         except Exception:
-            pass  # MessageNotModified or similar
-        
+            pass
+
         await cb.answer("Refreshed! ✅")
 
     @app.on_callback_query(filters.regex(f"^{CB_RULES}$"))
     async def show_rules(client: Client, cb: CallbackQuery):
         """Show game rules."""
         from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-        
+
         back_btn = InlineKeyboardMarkup([[
             InlineKeyboardButton("◀️ Back", callback_data=CB_MENU)
         ]])
-        
+
         try:
             await cb.message.edit_text(MSG_RULES, reply_markup=back_btn)
         except Exception:
             pass
-        
+
         await cb.answer()
