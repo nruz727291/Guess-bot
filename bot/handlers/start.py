@@ -14,7 +14,7 @@ from bot.utils.logger import logger
 def register(app: Client):
     """Register all start/menu handlers onto the Pyrogram client."""
 
-    @app.on_message(filters.command("start") & filters.private)
+    @app.on_message(filters.command("start"))
     async def start_cmd(client: Client, message: Message):
         """Handle /start command."""
         user = message.from_user
