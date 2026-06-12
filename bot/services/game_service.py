@@ -5,7 +5,7 @@ Manages game state, turns, guesses, timeouts, and rewards.
 
 import asyncio
 import random
-from typing import Optional
+from typing import Optional, Tuple
 from pyrogram import Client
 from bot.config import Config
 from bot.utils.logger import logger
